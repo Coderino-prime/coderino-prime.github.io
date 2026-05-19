@@ -1,3 +1,66 @@
-Hi there
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Projects</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Central index of my GitHub Pages and projects.">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <img src="avatar.png" alt="Avatar" class="avatar" onerror="this.style.display='none'">
+      <div>
+        <h1 class="name">Coder</h1>
+        <p class="tagline">Behold! My stuff.</p>
+      </div>
+    </header>
 
-<a href="/blog">Blog</a>
+    <section class="links-grid" aria-label="Projects and pages">
+      <!-- Example link items - replace href, title, and description as needed -->
+      <a class="card" href="/blog" target="_blank" rel="noopener">
+        <div class="card-head">
+          <span class="card-title">Blog</span>
+          <span class="chip">Website</span>
+        </div>
+        <p class="card-desc">My blog, where I usually don't do anything important.</p>
+      </a>
+
+      <a class="card" href="https://github.com/Coderino-prime" target="_blank" rel="noopener">
+        <div class="card-head">
+          <span class="card-title">GitHub Profile</span>
+          <span class="chip">Repo</span>
+        </div>
+        <p class="card-desc">My GitHub repositories and contributions.</p>
+      </a>
+
+      <!-- <a class="card" href="mailto:you@example.com" target="_blank" rel="noopener">
+        <div class="card-head">
+          <span class="card-title">Contact</span>
+          <span class="chip">Email</span>
+        </div>
+        <p class="card-desc">Get in touch for collaborations or questions.</p>
+      </a> -->
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Coder </p>
+    </footer>
+  </main>
+
+  <script>
+    // small JS: set year and enable keyboard focus outlines when using keyboard
+    document.getElementById('year').textContent = new Date().getFullYear();
+    (function(){
+      function handleFirstTab(e) {
+        if (e.key === 'Tab') {
+          document.documentElement.classList.add('user-is-tabbing');
+          window.removeEventListener('keydown', handleFirstTab);
+        }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+    })();
+  </script>
+</body>
+</html>
