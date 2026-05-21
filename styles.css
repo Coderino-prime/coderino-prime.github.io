@@ -161,3 +161,78 @@ body{
   margin-left: calc(-1 * ( (var(--max-width) / 2) - 40px ));
   opacity:0.9;
 }
+
+.modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .28s ease;
+  z-index:9999;
+}
+.modal[aria-hidden="false"]{pointer-events:auto;opacity:1}
+
+/* Backdrop */
+.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);z-index:0}
+
+/* Make content wrap the image exactly (no padding/background) */
+.modal-content{
+  position:relative;
+  z-index:1;
+  display:inline-block;    /* shrink-wrap to the image */
+  margin:0;
+  max-width:92vw;
+  max-height:92vh;
+  background:transparent;
+  box-shadow:0 24px 60px rgba(0,0,0,0.75);
+}
+
+/* Image constrained to viewport, receives focus so outline matches its shape */
+.modal-image{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:90vw;
+  max-height:90vh;
+  border-radius:10px;
+  object-fit:contain;
+  outline: none; /* reset default */
+}
+
+/* Focus-visible styling applied to the image itself (thin dark outline + purple glow) */
+.modal-image:focus-visible{
+  box-shadow:
+    0 0 0 4px rgba(0,0,0,0.6),
+    0 0 0 8px rgba(111,66,193,0.32),
+    0 6px 28px rgba(111,66,193,0.12);
+  border-radius:10px;
+}
+
+/* Close button and interactions */
+.modal-close{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background: rgba(255,255,255,0.06); /* subtle light surface so icon is visible */
+  border: 1px solid rgba(0,0,0,0.65);  /* thin black outline for contrast */
+  color: var(--text);
+  font-size:26px;
+  line-height:1;
+  padding:6px 8px;
+  border-radius:8px;
+  cursor:pointer;
+  z-index:3; /* above the image */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px) saturation(120%);
+}
+.modal-close:hover{
+  background: rgba(255,255,255,0.09);
+}
+.modal-close:focus{
+  outline: 3px solid rgba(111,66,193,0.18);
+  outline-offset: 3px;
+}
+.avatar{cursor:pointer}

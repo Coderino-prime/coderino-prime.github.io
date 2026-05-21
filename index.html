@@ -13,12 +13,19 @@
 <body>
   <main class="container">
     <header class="header">
-      <img src="/assets/img/SmoothWitIt.jpg" alt="Avatar" class="avatar" onerror="this.style.display='none'">
+      <img src="/assets/img/SmoothWitIt.jpg" alt="Avatar" class="avatar" id="avatarThumb" onerror="this.style.display='none'">
       <div>
         <h1 class="name">The Coderino Menagerie</h1>
         <p class="tagline">Behold! My stuff.</p>
       </div>
     </header>
+    
+    <div id="avatarModal" class="modal" aria-hidden="true" role="dialog" aria-label="Avatar preview" tabindex="-1">
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+      <div class="modal-content" role="document">
+        <img src="avatar.png" alt="Avatar large" class="modal-image" id="modalImage" tabindex="0" />
+      </div>
+    </div>
 
     <section class="links-grid" aria-label="Projects and pages">
       <a class="card" href="/blog" rel="noopener">
@@ -56,5 +63,57 @@
       window.addEventListener('keydown', handleFirstTab);
     })();
   </script>
+
+<script>
+    (function(){
+      const thumb = document.getElementById('avatarThumb');
+      const modal = document.getElementById('avatarModal');
+      const modalImage = document.getElementById('modalImage');
+
+      if(!thumb || !modal) return;
+
+      function openModal(){
+        modal.setAttribute('aria-hidden','false');
+        modalImage.src = thumb.src; // swap to higher-res path if available
+        document.body.style.overflow = 'hidden';
+        // add a one-time mousedown listener that closes on left-click anywhere
+        const onDocMouseDown = (e) => {
+          if (e.button === 0) closeModal(); // left click
+        };
+        // add a key listener for Escape
+        const onDocKey = (e) => { if(e.key === 'Escape') closeModal(); };
+
+        // store handlers so we can remove them on close
+        modal._handlers = { onDocMouseDown, onDocKey };
+        document.addEventListener('mousedown', onDocMouseDown);
+        document.addEventListener('keydown', onDocKey);
+
+        // move focus for accessibility
+        modalImage.src = thumb.src;
+        document.body.style.overflow = 'hidden';
+        modalImage.focus();
+      }
+
+      function closeModal(){
+        modal.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        // remove previously attached handlers
+        if(modal._handlers){
+          document.removeEventListener('mousedown', modal._handlers.onDocMouseDown);
+          document.removeEventListener('keydown', modal._handlers.onDocKey);
+          modal._handlers = null;
+        }
+        thumb.focus();
+      }
+
+      // prevent the opening click from immediately triggering the document listener
+      thumb.addEventListener('click', (e) => { e.stopPropagation(); openModal(); });
+      thumb.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); } });
+
+      // also allow clicking inside modal to close (the global listener handles it),
+      // but stop propagation on the initial open to avoid race; nothing more needed here.
+    })();
+  </script>
+
 </body>
 </html>
