@@ -33,6 +33,7 @@ body{
 
 /* Container */
 .container{
+  position: relative;
   width:100%;
   max-width:var(--max-width);
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
@@ -144,22 +145,26 @@ body{
   .avatar{width:56px;height:56px}
   .name{font-size:1.15rem}
   .container{padding:18px}
+  .container::before{
+    width: calc(100% - 32px);
+    transform: translateX(-50%) translateY(-36px);
+  }
 }
 
-/* Decorative accent bar (optional add) */
+/* Decorative accent bar */
 .container::before{
-  content:"";
+  content: "";
   position: absolute;
-  pointer-events:none;
-  width:calc(100% - 80px);
-  max-width:calc(var(--max-width) - 80px);
-  height:4px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-44px);
+  pointer-events: none;
+  width: min(calc(100% - 56px), var(--max-width));
+  height: 4px;
+  border-radius: 4px;
   background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
-  border-radius:4px;
-  transform: translateY(-44px);
-  left:50%;
-  margin-left: calc(-1 * ( (var(--max-width) / 2) - 40px ));
-  opacity:0.9;
+  opacity: 0.9;
+  z-index: 2;
 }
 
 .modal{
